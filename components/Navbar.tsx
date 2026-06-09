@@ -97,7 +97,7 @@ export default function Navbar() {
               alt="Honeybadger.AI Logo"
               width={180}
               height={36}
-              className="h-9 w-auto object-contain"
+              className={cn("h-9 w-auto object-contain", isLight ? "invert hue-rotate-180" : "")}
               priority
             />
           </motion.div>
@@ -195,7 +195,7 @@ export default function Navbar() {
                       alt="Honeybadger.AI Logo"
                       width={130}
                       height={26}
-                      className="h-7 w-auto object-contain"
+                      className={cn("h-7 w-auto object-contain", isLight ? "invert hue-rotate-180" : "")}
                     />
                   </motion.div>
                 </a>
