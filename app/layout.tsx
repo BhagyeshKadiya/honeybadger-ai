@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import SpiderCursor from "@/components/SpiderCursor";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ScrollToTop from "@/components/ScrollToTop";
+import { LocalBusinessSchema } from "@/components/SchemaOrg";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -13,22 +14,14 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://honeybadgerai.in"),
+  alternates: { canonical: "https://honeybadgerai.in" },
   title: "Honeybadger.AI | AI-Powered Marketing for Real Estate, Hospitality & E-Commerce",
   description: "Performance marketing, WhatsApp automation, and AI content production for businesses in Naroli, DNH, Vapi, Silvassa, and Daman.",
-  keywords: [
-    "performance marketing DNH",
-    "WhatsApp automation Vapi",
-    "real estate marketing Naroli",
-    "marketing agency Silvassa",
-    "Daman ads",
-    "hospitality marketing Silvassa",
-    "e-commerce marketing Vapi",
-    "growth agency DNH",
-  ],
   openGraph: {
     title: "Honeybadger.AI | AI-Powered Marketing for Real Estate, Hospitality & E-Commerce",
     description: "Performance marketing, WhatsApp automation, and AI content production for businesses in Naroli, DNH, Vapi, Silvassa, and Daman.",
-    url: "https://honeybadger.ai",
+    url: "https://honeybadgerai.in",
     siteName: "Honeybadger.AI",
     images: [
       {
@@ -38,11 +31,13 @@ export const metadata: Metadata = {
         alt: "Honeybadger.AI Revenue Infrastructure",
       },
     ],
-    locale: "en_US",
+    locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
+    site: "@honeybadgerai",
+    creator: "@honeybadgerai",
     title: "Honeybadger.AI | AI-Powered Marketing for Real Estate, Hospitality & E-Commerce",
     description: "Performance marketing, WhatsApp automation, and AI content production for businesses in Naroli, DNH, Vapi, Silvassa, and Daman.",
     images: ["/og-image.png"],
@@ -63,6 +58,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <LocalBusinessSchema />
           <SpiderCursor />
           {children}
           <FloatingWhatsApp />

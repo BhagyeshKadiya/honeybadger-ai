@@ -90,10 +90,12 @@ export default function Hero() {
           </motion.div>
 
           {/* Heading */}
-          <motion.h1
+          <h1 className="sr-only">We don't run ads. We build growth systems.</h1>
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            aria-hidden="true"
             className="text-display font-outfit font-bold tracking-tight text-foreground"
           >
             <span className="block mb-2">
@@ -118,7 +120,7 @@ export default function Hero() {
                 </motion.span>
               ))}
             </span>
-          </motion.h1>
+          </motion.div>
 
           {/* Subtitle */}
           <motion.p
