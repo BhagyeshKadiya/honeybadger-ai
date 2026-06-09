@@ -37,6 +37,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open to prevent background scrolling
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -70,95 +82,97 @@ export default function Navbar() {
   const isLight = resolvedTheme === "light";
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-md shadow-sm"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
-        {/* Logo Section */}
-        <a href="#hero" onClick={(e) => handleNavClick(e, "#hero")} className="relative z-50 flex items-center">
-          <motion.div
-            whileHover={{ 
-              scale: 1.04,
-              rotate: [0, -1.5, 1.5, -1.5, 1.5, 0] 
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 15
-            }}
-            className="transition-all duration-300 flex items-center"
-          >
-            <Image
-              src="/logo.png"
-              alt="Honeybadger.AI Logo"
-              width={180}
-              height={36}
-              className={cn("h-9 w-auto object-contain", isLight ? "invert hue-rotate-180" : "")}
-              priority
-            />
-          </motion.div>
-        </a>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center space-x-8 md:flex">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-hb-teal"
+    <>
+      <header
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? "border-b border-border bg-background/80 backdrop-blur-md shadow-sm"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
+          {/* Logo Section */}
+          <a href="#hero" onClick={(e) => handleNavClick(e, "#hero")} className="relative z-50 flex items-center">
+            <motion.div
+              whileHover={{ 
+                scale: 1.04,
+                rotate: [0, -1.5, 1.5, -1.5, 1.5, 0] 
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 15
+              }}
+              className="transition-all duration-300 flex items-center"
             >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Theme and CTA Button */}
-        <div className="hidden items-center space-x-4 md:flex">
-          <button
-            onClick={toggleTheme}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
-            aria-label="Toggle visual theme"
-          >
-            {isLight ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-          </button>
-          
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ variant: "default" }),
-              "bg-hb-teal text-hb-black font-semibold hover:bg-hb-teal-deep hover:text-white transition-colors duration-300 px-4 py-2 inline-flex items-center justify-center rounded-lg"
-            )}
-          >
-            Talk to Us <ArrowRight className="ml-2 h-4 w-4" />
+              <Image
+                src="/logo.png"
+                alt="Honeybadger.AI Logo"
+                width={180}
+                height={36}
+                className={cn("h-9 w-auto object-contain", isLight ? "invert hue-rotate-180" : "")}
+                priority
+              />
+            </motion.div>
           </a>
-        </div>
 
-        {/* Mobile controls: Theme toggle & Hamburger menu */}
-        <div className="flex items-center space-x-3 md:hidden">
-          <button
-            onClick={toggleTheme}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
-            aria-label="Toggle visual theme"
-          >
-            {isLight ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-          </button>
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center space-x-8 md:flex">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-hb-teal"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
-            aria-label="Open navigation menu"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
+          {/* Theme and CTA Button */}
+          <div className="hidden items-center space-x-4 md:flex">
+            <button
+              onClick={toggleTheme}
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
+              aria-label="Toggle visual theme"
+            >
+              {isLight ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            </button>
+            
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "bg-hb-teal text-hb-black font-semibold hover:bg-hb-teal-deep hover:text-white transition-colors duration-300 px-4 py-2 inline-flex items-center justify-center rounded-lg"
+              )}
+            >
+              Talk to Us <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
+
+          {/* Mobile controls: Theme toggle & Hamburger menu */}
+          <div className="flex items-center space-x-3 md:hidden">
+            <button
+              onClick={toggleTheme}
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
+              aria-label="Toggle visual theme"
+            >
+              {isLight ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-muted"
+              aria-label="Open navigation menu"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
       {/* Mobile Drawer Menu */}
       <AnimatePresence>
@@ -240,6 +254,6 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
