@@ -90,9 +90,7 @@ export default function Navbar() {
               stiffness: 300,
               damping: 15
             }}
-            className={`transition-all duration-300 flex items-center ${
-              isLight ? "bg-[#0A0A0A] px-3 py-1.5 rounded-lg shadow-sm" : ""
-            }`}
+            className="transition-all duration-300 flex items-center"
           >
             <Image
               src="/logo.png"
@@ -190,7 +188,7 @@ export default function Navbar() {
                     whileHover={{ scale: 1.04, rotate: [0, -1.5, 1.5, -1.5, 1.5, 0] }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    className={`transition-all duration-300 ${isLight ? "bg-[#0A0A0A] px-3 py-1 rounded-lg" : ""}`}
+                    className="transition-all duration-300"
                   >
                     <Image
                       src="/logo.png"
