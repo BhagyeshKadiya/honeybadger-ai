@@ -80,7 +80,16 @@ export default function Navbar() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
         {/* Logo Section */}
         <a href="#hero" onClick={(e) => handleNavClick(e, "#hero")} className="relative z-50 flex items-center">
-          <div
+          <motion.div
+            whileHover={{ 
+              scale: 1.04,
+              rotate: [0, -1.5, 1.5, -1.5, 1.5, 0] 
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 15
+            }}
             className={`transition-all duration-300 flex items-center ${
               isLight ? "bg-[#0A0A0A] px-3 py-1.5 rounded-lg shadow-sm" : ""
             }`}
@@ -93,7 +102,7 @@ export default function Navbar() {
               className="h-9 w-auto object-contain"
               priority
             />
-          </div>
+          </motion.div>
         </a>
 
         {/* Desktop Navigation */}
@@ -177,7 +186,12 @@ export default function Navbar() {
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-6 border-b border-border">
                 <a href="#hero" onClick={(e) => handleNavClick(e, "#hero")} className="flex items-center">
-                  <div className={`transition-all duration-300 ${isLight ? "bg-[#0A0A0A] px-3 py-1 rounded-lg" : ""}`}>
+                  <motion.div
+                    whileHover={{ scale: 1.04, rotate: [0, -1.5, 1.5, -1.5, 1.5, 0] }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    className={`transition-all duration-300 ${isLight ? "bg-[#0A0A0A] px-3 py-1 rounded-lg" : ""}`}
+                  >
                     <Image
                       src="/logo.png"
                       alt="Honeybadger.AI Logo"
@@ -185,7 +199,7 @@ export default function Navbar() {
                       height={26}
                       className="h-7 w-auto object-contain"
                     />
-                  </div>
+                  </motion.div>
                 </a>
                 <button
                   onClick={() => setMobileMenuOpen(false)}

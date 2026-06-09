@@ -83,7 +83,7 @@ export default function Footer() {
 
         {/* Bottom copyright notice */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 text-xs font-light text-zinc-600 space-y-4 md:space-y-0">
-          <p>© 2025 Honeybadger Digital · Naroli, DNH · All rights reserved.</p>
+          <p>© 2025 Honeybadger.AI · Naroli, DNH · All rights reserved.</p>
           <p className="flex items-center space-x-2">
             <span>AI-First Infrastructure</span>
             <span>·</span>

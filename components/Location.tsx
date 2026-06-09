@@ -35,8 +35,8 @@ export default function Location() {
               <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
                 <Landmark className="h-5 w-5" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">
-                Honeybadger Digital
+              <h3 className="text-2xl font-bold text-foreground font-outfit">
+                Honeybadger.AI
               </h3>
               <p className="text-sm font-light text-muted-foreground">
                 Revenue Infrastructure Partner
@@ -89,7 +89,7 @@ export default function Location() {
             className="lg:col-span-7 relative w-full h-[350px] md:h-[430px] rounded-2xl border border-border shadow-sm overflow-hidden bg-card"
           >
             <iframe
-              title="Honeybadger Digital Naroli Location Map"
+              title="Honeybadger.AI Naroli Location Map"
               src="https://maps.google.com/maps?q=Naroli,+Dadra+and+Nagar+Haveli&output=embed"
               className="absolute inset-0 w-full h-full border-0"
               allowFullScreen={false}

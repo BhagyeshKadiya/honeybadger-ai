@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import SpiderCursor from "@/components/SpiderCursor";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -65,6 +66,7 @@ export default function RootLayout({
           <SpiderCursor />
           {children}
           <FloatingWhatsApp />
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>
