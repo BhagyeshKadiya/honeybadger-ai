@@ -40,7 +40,7 @@ export default function ScrollToTop() {
           whileTap={{ scale: 0.9 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
           className={cn(
-            "fixed bottom-24 right-7 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-hb-teal/30 bg-card/80 text-hb-teal shadow-md backdrop-blur-md transition-colors duration-300 hover:bg-hb-teal hover:text-hb-black hover:border-hb-teal"
+            "fixed bottom-[88px] right-6 md:bottom-24 md:right-7 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-hb-teal/30 bg-card/80 text-hb-teal shadow-md backdrop-blur-md transition-colors duration-300 hover:bg-hb-teal hover:text-hb-black hover:border-hb-teal"
           )}
           aria-label="Scroll to top of page"
         >

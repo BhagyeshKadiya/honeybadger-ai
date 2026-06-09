@@ -193,13 +193,13 @@ export default function Hero() {
           variants={rightVisualVariants}
           initial="hidden"
           animate="visible"
-          className="lg:col-span-5 relative w-full aspect-square max-w-[450px] mx-auto flex items-center justify-center rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm p-8 shadow-inner overflow-hidden"
+          className="lg:col-span-5 relative w-full aspect-square max-w-[450px] mx-auto flex items-center justify-center rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm p-4 sm:p-8 shadow-inner overflow-hidden"
         >
           {/* Static Cyber Grid Overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
           {/* SVG Animated Connector Lines */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none">
+          <svg viewBox="0 0 450 450" className="absolute inset-0 w-full h-full pointer-events-none">
             {/* Top Left -> Center */}
             <path
               d="M 110 110 L 225 225"
@@ -247,7 +247,7 @@ export default function Hero() {
 
           {/* Central Pulsing Hub */}
           <motion.div
-            className="absolute z-20 flex h-28 w-28 flex-col items-center justify-center rounded-full border border-hb-teal bg-background shadow-lg shadow-hb-teal/10 text-center"
+            className="absolute z-20 flex h-20 w-20 sm:h-28 sm:w-28 flex-col items-center justify-center rounded-full border border-hb-teal bg-background shadow-lg shadow-hb-teal/10 text-center"
             animate={{ scale: [1, 1.05, 1] }}
             transition={{
               repeat: Infinity,
@@ -256,17 +256,17 @@ export default function Hero() {
             }}
           >
             <div className="absolute inset-0 -m-1 animate-ping rounded-full border border-hb-teal/30 opacity-40" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-hb-teal">
+            <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-hb-teal">
               Core Hub
             </span>
-            <span className="text-xs font-bold text-foreground mt-0.5">
+            <span className="text-[10px] sm:text-xs font-bold text-foreground mt-0.5">
               Growth System
             </span>
           </motion.div>
 
           {/* Node 1: AI Content */}
           <motion.div
-            className="absolute top-[12%] left-[10%] z-10 flex items-center space-x-3 rounded-xl border border-border/80 bg-card p-3 shadow-md w-[165px]"
+            className="absolute top-[12%] left-[3%] sm:left-[10%] z-10 flex items-center space-x-2 sm:space-x-3 rounded-xl border border-border/80 bg-card p-2 sm:p-3 shadow-md w-[130px] sm:w-[165px]"
             animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
             transition={{
               repeat: Infinity,
@@ -274,20 +274,20 @@ export default function Hero() {
               ease: "easeInOut",
             }}
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
-              <Sparkles className="h-5 w-5" />
+            <div className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="min-w-0">
+              <p className="text-[8px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider truncate">
                 Pillar 01
               </p>
-              <h3 className="text-xs font-bold text-foreground">AI Content</h3>
+              <h3 className="text-[10px] sm:text-xs font-bold text-foreground leading-tight">AI Content</h3>
             </div>
           </motion.div>
 
           {/* Node 2: Performance Ads */}
           <motion.div
-            className="absolute top-[12%] right-[10%] z-10 flex items-center space-x-3 rounded-xl border border-border/80 bg-card p-3 shadow-md w-[165px]"
+            className="absolute top-[12%] right-[3%] sm:right-[10%] z-10 flex items-center space-x-2 sm:space-x-3 rounded-xl border border-border/80 bg-card p-2 sm:p-3 shadow-md w-[130px] sm:w-[165px]"
             animate={shouldReduceMotion ? {} : { y: [0, -15, 0] }}
             transition={{
               repeat: Infinity,
@@ -296,20 +296,20 @@ export default function Hero() {
               delay: 0.4,
             }}
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
-              <TrendingUp className="h-5 w-5" />
+            <div className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
+              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="min-w-0">
+              <p className="text-[8px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider truncate">
                 Pillar 02
               </p>
-              <h3 className="text-xs font-bold text-foreground">Full-Funnel Ads</h3>
+              <h3 className="text-[10px] sm:text-xs font-bold text-foreground leading-tight">Full-Funnel Ads</h3>
             </div>
           </motion.div>
 
           {/* Node 3: WhatsApp Automation */}
           <motion.div
-            className="absolute bottom-[12%] left-[50%] -translate-x-1/2 z-10 flex items-center space-x-3 rounded-xl border border-border/80 bg-card p-3 shadow-md w-[180px]"
+            className="absolute bottom-[12%] left-[50%] -translate-x-1/2 z-10 flex items-center space-x-2 sm:space-x-3 rounded-xl border border-border/80 bg-card p-2 sm:p-3 shadow-md w-[140px] sm:w-[180px]"
             animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
             transition={{
               repeat: Infinity,
@@ -318,14 +318,14 @@ export default function Hero() {
               delay: 0.8,
             }}
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
-              <MessageCircle className="h-5 w-5" />
+            <div className="flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-lg bg-hb-teal/10 text-hb-teal">
+              <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+            <div className="min-w-0">
+              <p className="text-[8px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider truncate">
                 Pillar 03
               </p>
-              <h3 className="text-xs font-bold text-foreground">WA Automation</h3>
+              <h3 className="text-[10px] sm:text-xs font-bold text-foreground leading-tight">WA Automation</h3>
             </div>
           </motion.div>
         </motion.div>
