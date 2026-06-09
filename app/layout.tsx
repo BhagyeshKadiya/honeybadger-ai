@@ -14,33 +14,29 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://honeybadgerai.in"),
-  alternates: { canonical: "https://honeybadgerai.in" },
-  title: "Honeybadger.AI | AI-Powered Marketing for Real Estate, Hospitality & E-Commerce",
-  description: "Performance marketing, WhatsApp automation, and AI content production for businesses in Naroli, DNH, Vapi, Silvassa, and Daman.",
+  metadataBase: new URL('https://honeybadgerai.in'),
+  title: {
+    default: 'Honeybadger.AI | Performance Marketing Agency in Naroli, DNH & Vapi',
+    template: '%s | Honeybadger.AI',
+  },
+  description: 'AI-powered performance marketing agency in Naroli, Dadra and Nagar Haveli. Meta & Google ads, WhatsApp automation via AiSensy, and AI content for real estate, hotels, and e-commerce brands across the Vapi–Silvassa–DNH corridor.',
+  alternates: {
+    canonical: 'https://honeybadgerai.in',
+  },
+  verification: {
+    google: 'lkaCbgUsSCIDi2Kj0jvVovzGwCYILDIFovAQRAnpQJo',
+  },
   openGraph: {
-    title: "Honeybadger.AI | AI-Powered Marketing for Real Estate, Hospitality & E-Commerce",
-    description: "Performance marketing, WhatsApp automation, and AI content production for businesses in Naroli, DNH, Vapi, Silvassa, and Daman.",
-    url: "https://honeybadgerai.in",
-    siteName: "Honeybadger.AI",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Honeybadger.AI Revenue Infrastructure",
-      },
-    ],
-    locale: "en_IN",
-    type: "website",
+    url: 'https://honeybadgerai.in',
+    siteName: 'Honeybadger.AI',
+    locale: 'en_IN',
+    type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
-    card: "summary_large_image",
-    site: "@honeybadgerai",
-    creator: "@honeybadgerai",
-    title: "Honeybadger.AI | AI-Powered Marketing for Real Estate, Hospitality & E-Commerce",
-    description: "Performance marketing, WhatsApp automation, and AI content production for businesses in Naroli, DNH, Vapi, Silvassa, and Daman.",
-    images: ["/og-image.png"],
+    card: 'summary_large_image',
+    site: '@honeybadgerai',
+    creator: '@honeybadgerai',
   },
 };
 
