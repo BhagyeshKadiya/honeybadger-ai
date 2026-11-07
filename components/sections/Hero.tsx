@@ -22,10 +22,11 @@ const TRUST = ["Websites", "Web Apps", "Mobile Apps", "AI Automation", "RAG", "A
 export function Hero() {
   return (
     <section aria-labelledby="hero-heading" className="noise relative isolate overflow-hidden pt-24 pb-12 sm:pt-36 sm:pb-16">
-      {/* Radial turquoise glow + 4% white grid */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10">
+      {/* Radial turquoise glow + 4% white grid + 3D perspective horizon floor */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
         <div className="bg-hero-glow absolute inset-0" />
         <div className="bg-grid absolute inset-0" />
+        <div className="bg-perspective-grid-3d pointer-events-none absolute inset-x-0 bottom-0 h-[55%] opacity-70" />
         <div className="mesh-blob -top-24 left-[8%] h-[420px] w-[420px]" style={{ background: "var(--glow-a)" }} />
         <div className="mesh-blob top-10 right-[4%] h-[460px] w-[460px]" style={{ background: "var(--glow-b)", animationDelay: "-6s" }} />
       </div>

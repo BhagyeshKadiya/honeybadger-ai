@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Bot, Database, FileText, Layers, Sparkles, User, type LucideIcon } from "lucide-react";
 import { RAG_DEMO, RAG_PIPELINE } from "@/content/home";
 import { CtaLink } from "@/components/CtaLinks";
+import { Tilt3DCard } from "@/components/motion/Tilt3DCard";
 import { SectionHeading } from "./SectionHeading";
 
 const NODE_ICONS: Record<string, LucideIcon> = {
@@ -52,16 +53,19 @@ function PipelineDiagram() {
             initial={{ opacity: 0, x: -16 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: reduce ? 0 : 0.25 * i }}
-            className="glass relative flex items-center gap-4 px-4 py-3"
           >
-            <span className="bg-surface-2 border-border-strong text-brand relative z-10 grid size-10 shrink-0 place-items-center rounded-xl border">
-              <Icon className="size-5" aria-hidden="true" />
-            </span>
-            <span className="flex flex-col">
-              <span className="font-display font-semibold">{n.label}</span>
-              <span className="text-muted-foreground font-mono text-xs">{n.hint}</span>
-            </span>
-            <span className="text-brand ml-auto font-mono text-xs">0{i + 1}</span>
+            <Tilt3DCard intensity={7}>
+              <div className="preserve-3d relative flex items-center gap-4 px-4 py-3">
+                <span className="depth-z-20 bg-surface-2 border-border-strong text-brand relative z-10 grid size-10 shrink-0 place-items-center rounded-xl border shadow-[0_8px_20px_rgba(29,242,226,0.2)]">
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <span className="depth-z-10 flex flex-col">
+                  <span className="font-display font-semibold">{n.label}</span>
+                  <span className="text-muted-foreground font-mono text-xs">{n.hint}</span>
+                </span>
+                <span className="depth-z-20 text-brand ml-auto font-mono text-xs">0{i + 1}</span>
+              </div>
+            </Tilt3DCard>
           </m.li>
         );
       })}
@@ -104,57 +108,59 @@ function ChatDemo() {
   const done = a >= RAG_DEMO.answer.length;
 
   return (
-    <div ref={ref} className="glass relative overflow-hidden p-5" role="img" aria-label={`Demo chat. Question: ${RAG_DEMO.question} Answer: ${RAG_DEMO.answer}`}>
-      <div className="animate-scan-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-      <div className="text-muted-foreground mb-4 flex items-center gap-2 font-mono text-xs">
-        <span className="animate-turquoise-pulse bg-primary size-2 rounded-full" /> live demo · illustrative content
-      </div>
-      <div className="min-h-[15rem] space-y-3 text-sm" aria-hidden="true">
-        <div className="flex items-start gap-2.5">
-          <span className="bg-surface-2 grid size-7 shrink-0 place-items-center rounded-full">
-            <User className="size-3.5" />
-          </span>
-          <p className="bg-surface-2 rounded-2xl rounded-tl-sm px-3.5 py-2.5">
-            <span className={q < RAG_DEMO.question.length ? "caret" : ""}>{RAG_DEMO.question.slice(0, q)}</span>
-          </p>
+    <div ref={ref} role="img" aria-label={`Demo chat. Question: ${RAG_DEMO.question} Answer: ${RAG_DEMO.answer}`}>
+      <Tilt3DCard className="p-5" intensity={8}>
+        <div className="animate-scan-line pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+        <div className="depth-z-10 text-muted-foreground mb-4 flex items-center gap-2 font-mono text-xs">
+          <span className="animate-turquoise-pulse bg-primary size-2 rounded-full" /> live demo · illustrative content
         </div>
-        {q >= RAG_DEMO.question.length && (
-          <div className="flex items-start gap-2.5">
-            <span className="bg-brand-gradient text-ink grid size-7 shrink-0 place-items-center rounded-full">
-              <Bot className="size-3.5" />
+        <div className="preserve-3d min-h-[15rem] space-y-3 text-sm" aria-hidden="true">
+          <div className="depth-z-10 flex items-start gap-2.5">
+            <span className="bg-surface-2 grid size-7 shrink-0 place-items-center rounded-full">
+              <User className="size-3.5" />
             </span>
-            <div className="border-border rounded-2xl rounded-tl-sm border px-3.5 py-2.5">
-              <span className={!done ? "caret" : ""}>{RAG_DEMO.answer.slice(0, a)}</span>
-              {done && (
-                <m.ul initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-3 flex flex-wrap gap-2">
-                  {RAG_DEMO.sources.map((s) => (
-                    <li key={s} className="border-border-strong text-brand rounded-full border bg-surface-2 px-2.5 py-1 font-mono text-[11px]">
-                      {s}
-                    </li>
-                  ))}
-                </m.ul>
-              )}
-            </div>
+            <p className="bg-surface-2 rounded-2xl rounded-tl-sm px-3.5 py-2.5">
+              <span className={q < RAG_DEMO.question.length ? "caret" : ""}>{RAG_DEMO.question.slice(0, q)}</span>
+            </p>
           </div>
-        )}
-      </div>
+          {q >= RAG_DEMO.question.length && (
+            <div className="depth-z-20 flex items-start gap-2.5">
+              <span className="bg-brand-gradient text-ink grid size-7 shrink-0 place-items-center rounded-full shadow-[0_0_16px_rgba(29,242,226,0.35)]">
+                <Bot className="size-3.5" />
+              </span>
+              <div className="border-border bg-black/50 rounded-2xl rounded-tl-sm border px-3.5 py-2.5">
+                <span className={!done ? "caret" : ""}>{RAG_DEMO.answer.slice(0, a)}</span>
+                {done && (
+                  <m.ul initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-3 flex flex-wrap gap-2">
+                    {RAG_DEMO.sources.map((s) => (
+                      <li key={s} className="border-border-strong text-brand rounded-full border bg-surface-2 px-2.5 py-1 font-mono text-[11px]">
+                        {s}
+                      </li>
+                    ))}
+                  </m.ul>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </Tilt3DCard>
     </div>
   );
 }
 
 export function RagSpotlight() {
   return (
-    <section id="rag" aria-labelledby="rag-h" className="relative isolate overflow-hidden py-24 sm:py-32">
+    <section id="rag" aria-labelledby="rag-h" className="relative isolate overflow-hidden py-16 sm:py-28">
       <div aria-hidden="true" className="bg-dots absolute inset-0 -z-10" />
       <div aria-hidden="true" className="mesh-blob top-1/3 -right-20 -z-10 h-96 w-96" style={{ background: "var(--glow-a)" }} />
-      <div className="mx-auto max-w-6xl px-5">
+      <div className="mx-auto max-w-6xl px-4 sm:px-5">
         <SectionHeading
           id="rag-h"
           eyebrow="Flagship · RAG"
           title="AI that answers from your documents, and shows its sources."
           answer="Retrieval-augmented generation (RAG) searches your own knowledge before the model writes a word. The result is an assistant that is accurate, private and able to cite every claim."
         />
-        <div className="mt-12 grid items-start gap-8 lg:grid-cols-2">
+        <div className="mt-10 grid items-start gap-8 sm:mt-12 lg:grid-cols-2">
           <PipelineDiagram />
           <div className="space-y-6">
             <ChatDemo />

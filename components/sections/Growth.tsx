@@ -1,5 +1,6 @@
 import { Counter } from "@/components/motion/Counter";
 import { Reveal } from "@/components/motion/Reveal";
+import { Tilt3DCard } from "@/components/motion/Tilt3DCard";
 import { GROWTH_EXAMPLES } from "@/content/home";
 import { SectionHeading } from "./SectionHeading";
 import { TrendingUp } from "lucide-react";
@@ -9,7 +10,7 @@ function Sparkline({ series, id }: { series: readonly number[]; id: string }) {
   const pts = series.map((v, i) => `${(i / (series.length - 1)) * 200},${68 - (v / max) * 60}`);
   const line = `M${pts.join(" L")}`;
   return (
-    <svg viewBox="0 0 200 70" className="mt-6 h-20 w-full" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 200 70" className="depth-z-10 mt-6 h-20 w-full" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id={`${id}-s`} x1="0" x2="1">
           <stop offset="0" stopColor="#1DF2E2" />
@@ -28,7 +29,7 @@ function Sparkline({ series, id }: { series: readonly number[]; id: string }) {
 
 export function Growth() {
   return (
-    <section id="growth" aria-labelledby="growth-h" className="mx-auto max-w-6xl px-5 py-24 sm:py-32">
+    <section id="growth" aria-labelledby="growth-h" className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-28">
       <SectionHeading
         id="growth-h"
         eyebrow="Ranking and growth"
@@ -36,21 +37,21 @@ export function Growth() {
         answer="A product only grows when people can discover it. These example curves show the kind of trajectory a combined SEO, AEO, GEO and install strategy aims for."
       />
 
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
+      <div className="mt-10 grid gap-4 sm:mt-12 md:grid-cols-3">
         {GROWTH_EXAMPLES.map((g, i) => (
           <Reveal key={g.label} delay={i * 0.08}>
-            <div className="glass h-full p-6">
-              <div className="text-muted-foreground flex items-center justify-between text-sm">
+            <Tilt3DCard className="h-full p-6">
+              <div className="depth-z-10 text-muted-foreground flex items-center justify-between text-sm">
                 <span className="font-display font-medium text-foreground">{g.label}</span>
                 <span className="text-brand flex items-center gap-1 font-mono text-xs font-medium">
                   <TrendingUp className="size-3.5" aria-hidden="true" /> {g.delta}
                 </span>
               </div>
-              <p className="text-brand mt-3 font-mono text-4xl font-medium tracking-tight">
+              <p className="depth-z-20 text-brand mt-3 font-mono text-4xl font-medium tracking-tight drop-shadow-[0_0_16px_rgba(29,242,226,0.25)]">
                 <Counter to={g.value} suffix={g.suffix} />
               </p>
               <Sparkline series={g.series} id={`g${i}`} />
-            </div>
+            </Tilt3DCard>
           </Reveal>
         ))}
       </div>
