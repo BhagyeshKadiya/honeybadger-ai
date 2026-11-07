@@ -14,14 +14,13 @@ const CHAT = [
 
 const MOBILE_TABS = [
   { id: 0, label: "RAG Copilot", icon: Bot },
-  { id: 1, label: "Vector Code", icon: Code2 },
-  { id: 2, label: "Organic Growth", icon: TrendingUp },
+  { id: 1, label: "Vector Search", icon: Code2 },
+  { id: 2, label: "AEO / SEO", icon: TrendingUp },
 ] as const;
 
 /**
- * 3D Interactive Hero Scene:
- * - Mobile (<640px): App-style 3D Holographic Stage + interactive segmented 3D HUD switcher (zero vertical clutter!)
- * - Desktop (>=640px): Full 3D multi-plane floating HUD (`translateZ(52px)`, `translateZ(76px)`, `translateZ(36px)`)
+ * Compact interactive live preview widget for mobile (<lg),
+ * and full 3D multi-plane floating HUD + 3D Hologram for desktop (>=lg).
  */
 export default function HeroVisual() {
   const reduce = useReducedMotion();
@@ -31,11 +30,11 @@ export default function HeroVisual() {
   const sx = useSpring(mx, { stiffness: 120, damping: 20 });
   const sy = useSpring(my, { stiffness: 120, damping: 20 });
 
-  // Whole-scene 3D tilt
+  // Whole-scene 3D tilt (desktop)
   const sceneRotateY = useTransform(sx, (v) => v * 18);
   const sceneRotateX = useTransform(sy, (v) => v * -14);
 
-  // Parallax offsets per layer
+  // Parallax offsets per layer (desktop)
   const chatX = useTransform(sx, (v) => v * -18);
   const chatY = useTransform(sy, (v) => v * -12);
   const codeX = useTransform(sx, (v) => v * 24);
@@ -72,33 +71,17 @@ export default function HeroVisual() {
 
   return (
     <div
-      className="relative mx-auto w-full max-w-xl sm:h-[500px]"
+      className="relative mx-auto w-full max-w-xl lg:h-[500px]"
       style={{ perspective: "1200px" }}
       aria-hidden="true"
     >
       {/* =====================================================================
-          MOBILE NATIVE-APP 3D STAGE + INTERACTIVE HUD DECK (<640px)
+          MOBILE & TABLET: SLEEK COMPACT APP LIVE-PREVIEW CARD (<lg)
          ===================================================================== */}
-      <div className="sm:hidden">
-        <div className="glass relative overflow-hidden rounded-3xl border border-border-strong p-3 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_28px_rgba(29,242,226,0.16)]">
-          {/* Top app telemetry bar */}
-          <div className="mb-1 flex items-center justify-between px-1">
-            <span className="text-brand flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider">
-              <span className="animate-turquoise-pulse bg-primary size-1.5 rounded-full" />
-              3D Neural Core
-            </span>
-            <span className="text-muted-foreground flex items-center gap-1 font-mono text-[10px]">
-              <Sparkles className="text-brand size-3" /> Touch &amp; drag 3D
-            </span>
-          </div>
-
-          {/* Interactive 3D Badger Hologram */}
-          <div className="relative h-[200px] w-full">
-            <HoloBadger3D />
-          </div>
-
-          {/* App Segmented Tab Bar */}
-          <div className="bg-surface-2/90 mt-1 grid grid-cols-3 gap-1 rounded-2xl border border-border p-1">
+      <div className="mx-auto max-w-md lg:hidden">
+        <div className="glass overflow-hidden rounded-2xl border border-border-strong p-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85),0_0_24px_rgba(29,242,226,0.12)]">
+          {/* Segmented iOS/Android Pill Bar */}
+          <div className="bg-surface-2/90 grid grid-cols-3 gap-1 rounded-xl border border-border p-1">
             {MOBILE_TABS.map((t) => {
               const Icon = t.icon;
               const active = mobileTab === t.id;
@@ -107,47 +90,49 @@ export default function HeroVisual() {
                   key={t.id}
                   type="button"
                   onClick={() => setMobileTab(t.id)}
-                  className="relative flex items-center justify-center gap-1.5 rounded-xl py-2 font-mono text-[11px] font-medium transition-transform active:scale-95"
+                  className="relative flex items-center justify-center gap-1.5 rounded-lg py-1.5 font-mono text-[11px] font-medium transition-transform active:scale-95"
                 >
                   {active && (
                     <m.span
                       layoutId="hero-mobile-hud-pill"
                       transition={{ type: "spring", stiffness: 280, damping: 24 }}
-                      className="bg-brand-gradient absolute inset-0 rounded-xl shadow-[0_0_16px_rgba(29,242,226,0.35)]"
+                      className="bg-brand-gradient absolute inset-0 rounded-lg shadow-[0_0_14px_rgba(29,242,226,0.35)]"
                     />
                   )}
-                  <Icon className={cn("relative z-10 size-3.5", active ? "text-ink" : "text-brand")} />
-                  <span className={cn("relative z-10", active ? "text-ink font-semibold" : "text-muted-foreground")}>
-                    {t.label.split(" ")[0]}
+                  <Icon className={cn("relative z-10 size-3", active ? "text-ink" : "text-brand")} />
+                  <span className={cn("relative z-10 truncate", active ? "text-ink font-semibold" : "text-muted-foreground")}>
+                    {t.label}
                   </span>
                 </button>
               );
             })}
           </div>
 
-          {/* Active 3D HUD Card with 3D perspective transition */}
-          <div className="mt-2.5 min-h-[138px]" style={{ perspective: "900px" }}>
+          {/* Active Live Preview Panel */}
+          <div className="mt-2 min-h-[124px]" style={{ perspective: "900px" }}>
             <AnimatePresence mode="wait">
               {mobileTab === 0 && (
                 <m.div
                   key="m-chat"
-                  initial={{ opacity: 0, rotateX: -12, y: 8 }}
-                  animate={{ opacity: 1, rotateX: 0, y: 0 }}
-                  exit={{ opacity: 0, rotateX: 12, y: -8 }}
-                  transition={{ duration: 0.22 }}
-                  className="bg-surface-2/70 rounded-2xl border border-border p-3"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                  className="bg-surface-2/60 rounded-xl border border-border p-3 text-left"
                 >
-                  <div className="mb-2 flex items-center justify-between text-xs font-medium">
-                    <span className="font-display flex items-center gap-1.5">
-                      <Bot className="text-brand size-3.5" /> Knowledge copilot
+                  <div className="mb-2 flex items-center justify-between text-[11px] font-medium">
+                    <span className="font-display flex items-center gap-1.5 text-foreground">
+                      <Bot className="text-brand size-3.5" /> Private RAG Assistant
                     </span>
-                    <span className="text-brand font-mono text-[10px]">grounded · cited</span>
+                    <span className="text-brand flex items-center gap-1 font-mono text-[10px]">
+                      <span className="animate-turquoise-pulse bg-primary size-1.5 rounded-full" /> cited
+                    </span>
                   </div>
                   <div className="space-y-1.5 text-xs leading-snug">
-                    <p className="bg-background/80 ml-auto w-fit max-w-[88%] rounded-xl rounded-br-sm border border-border px-2.5 py-1.5">
+                    <p className="bg-background/90 ml-auto w-fit max-w-[88%] rounded-xl rounded-br-sm border border-border px-2.5 py-1.5 text-foreground">
                       {CHAT[0].text}
                     </p>
-                    <p className="border-border-strong bg-black/70 w-fit max-w-[94%] rounded-xl rounded-bl-sm border px-2.5 py-1.5">
+                    <p className="border-border-strong bg-black/80 w-fit max-w-[94%] rounded-xl rounded-bl-sm border px-2.5 py-1.5 text-foreground">
                       <span className={typed < CHAT[1].text.length ? "caret" : ""}>{CHAT[1].text.slice(0, typed)}</span>
                       {typed >= CHAT[1].text.length && (
                         <span className="text-brand mt-1 block font-mono text-[10px] font-medium">↳ {CHAT[1].cite}</span>
@@ -160,13 +145,13 @@ export default function HeroVisual() {
               {mobileTab === 1 && (
                 <m.div
                   key="m-code"
-                  initial={{ opacity: 0, rotateX: -12, y: 8 }}
-                  animate={{ opacity: 1, rotateX: 0, y: 0 }}
-                  exit={{ opacity: 0, rotateX: 12, y: -8 }}
-                  transition={{ duration: 0.22 }}
-                  className="bg-surface-2/70 rounded-2xl border border-border p-3"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                  className="bg-surface-2/60 rounded-xl border border-border p-3 text-left"
                 >
-                  <div className="border-border mb-2 flex items-center gap-1.5 border-b pb-2">
+                  <div className="border-border mb-2 flex items-center gap-1.5 border-b pb-1.5">
                     <span className="bg-subtle size-2 rounded-full" />
                     <span className="bg-subtle size-2 rounded-full" />
                     <span className="bg-primary size-2 rounded-full" />
@@ -187,19 +172,19 @@ export default function HeroVisual() {
               {mobileTab === 2 && (
                 <m.div
                   key="m-chart"
-                  initial={{ opacity: 0, rotateX: -12, y: 8 }}
-                  animate={{ opacity: 1, rotateX: 0, y: 0 }}
-                  exit={{ opacity: 0, rotateX: 12, y: -8 }}
-                  transition={{ duration: 0.22 }}
-                  className="bg-surface-2/70 rounded-2xl border border-border p-3"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                  className="bg-surface-2/60 rounded-xl border border-border p-3 text-left"
                 >
-                  <div className="mb-1.5 flex items-center justify-between text-xs font-medium">
-                    <span className="font-display flex items-center gap-1.5">
-                      <TrendingUp className="text-brand size-3.5" /> AEO · GEO · SEO trajectory
+                  <div className="mb-1 flex items-center justify-between text-[11px] font-medium">
+                    <span className="font-display flex items-center gap-1.5 text-foreground">
+                      <TrendingUp className="text-brand size-3.5" /> AEO · GEO · SEO discovery
                     </span>
                     <span className="text-brand font-mono text-[10px]">illustrative</span>
                   </div>
-                  <svg viewBox="0 0 200 70" className="h-16 w-full" fill="none">
+                  <svg viewBox="0 0 200 64" className="h-14 w-full" fill="none">
                     <defs>
                       <linearGradient id="hv-m-line" x1="0" x2="1">
                         <stop offset="0" stopColor="#1DF2E2" />
@@ -210,9 +195,9 @@ export default function HeroVisual() {
                         <stop offset="1" stopColor="#1DF2E2" stopOpacity="0" />
                       </linearGradient>
                     </defs>
-                    <path d="M0 62 L30 56 L60 58 L90 42 L120 38 L150 22 L200 6 L200 70 L0 70Z" fill="url(#hv-m-fill)" />
+                    <path d="M0 58 L30 52 L60 54 L90 38 L120 34 L150 18 L200 6 L200 64 L0 64Z" fill="url(#hv-m-fill)" />
                     <path
-                      d="M0 62 L30 56 L60 58 L90 42 L120 38 L150 22 L200 6"
+                      d="M0 58 L30 52 L60 54 L90 38 L120 34 L150 18 L200 6"
                       stroke="url(#hv-m-line)"
                       strokeWidth="2.5"
                       strokeLinecap="round"
@@ -227,7 +212,7 @@ export default function HeroVisual() {
       </div>
 
       {/* =====================================================================
-          DESKTOP 3D MULTI-PLANE FLOATING SCENE (>=640px)
+          DESKTOP 3D MULTI-PLANE FLOATING SCENE (>=lg)
          ===================================================================== */}
       <m.div
         style={
@@ -239,7 +224,7 @@ export default function HeroVisual() {
                 transformStyle: "preserve-3d",
               }
         }
-        className="relative hidden h-full w-full sm:block"
+        className="relative hidden h-full w-full lg:block"
       >
         {/* 3D HOLOGRAPHIC BADGER CORE */}
         <div
