@@ -4,22 +4,23 @@ import * as m from "motion/react-m";
 import { useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
-const OUTER_PATH =
-  "M20 12 L48 30 L38 56 L53 102 L44 106 L12 56 L24 40 L16 16 Z M100 12 L72 30 L82 56 L67 102 L76 106 L108 56 L96 40 L104 16 Z";
-const INNER_PATH =
-  "M46 34 L55 52 L46 70 L56 98 L60 98 L64 98 L74 70 L65 52 L74 34 L63 44 L60 36 L57 44 Z";
-const SNOUT_PATH = "M50 104 L70 104 L66 112 L54 112 Z";
+export const LEFT_BOLT_PATH =
+  "M26 15 L34 56 L39 50 L34 26 L56 42 L40 72 L52 85 L70 122 L73 122 L64 80 L58 72 L72 45 Z";
+export const RIGHT_BOLT_PATH =
+  "M132 15 L124 56 L119 50 L124 26 L102 42 L118 72 L106 85 L88 122 L85 122 L94 80 L100 72 L86 45 Z";
+export const JAW_PATH =
+  "M28 60 L12 80 L39 98 L63 136 L68 142 L90 142 L95 136 L119 98 L146 80 L130 60 L124 66 L132 77 L112 91 L92 130 L86 130 L84 127 L74 127 L72 130 L66 130 L46 91 L26 77 L34 66 Z";
 
 /**
- * Standalone animated Honeybadger mark.
- * On first load, stroke-draws the angular paths in turquoise (`pathLength` 0 -> 1, 1.2s),
- * then fades in the turquoise gradient fill. Respects `prefers-reduced-motion`.
+ * Standalone animated Honeybadger symbol mark (exact geometry from uploaded symbol).
+ * Stroke-draws the 3 angular paths in turquoise (`pathLength` 0 -> 1, 1.2s),
+ * then fades in the turquoise gradient fill with a subtle hover pulse.
  */
 export function BadgerMark({
   className,
   size = 40,
   animate = true,
-  title = "Honeybadger.AI mark",
+  title = "Honeybadger.AI symbol",
 }: {
   className?: string;
   size?: number;
@@ -30,18 +31,20 @@ export function BadgerMark({
   const shouldAnimate = animate && !reduce;
 
   return (
-    <svg
+    <m.svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 120 120"
+      viewBox="0 0 160 160"
       width={size}
       height={size}
       fill="none"
       role="img"
       aria-label={title}
-      className={cn("shrink-0 drop-shadow-[0_0_16px_rgba(29,242,226,0.35)]", className)}
+      whileHover={reduce ? undefined : { scale: 1.08, rotate: [0, -3, 3, 0] }}
+      transition={{ duration: 0.45, ease: "easeInOut" }}
+      className={cn("shrink-0 drop-shadow-[0_0_18px_rgba(29,242,226,0.4)]", className)}
     >
       <defs>
-        <linearGradient id="bm-grad" x1="16" y1="10" x2="104" y2="112" gradientUnits="userSpaceOnUse">
+        <linearGradient id="bm-grad" x1="12" y1="15" x2="146" y2="142" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#1DF2E2" />
           <stop offset="100%" stopColor="#0FB8AA" />
         </linearGradient>
@@ -49,9 +52,9 @@ export function BadgerMark({
 
       {/* Stroke-draw layer (0 -> 1 in 1.2s) */}
       <m.path
-        d={`${OUTER_PATH} ${INNER_PATH} ${SNOUT_PATH}`}
+        d={`${LEFT_BOLT_PATH} ${RIGHT_BOLT_PATH} ${JAW_PATH}`}
         stroke="#1DF2E2"
-        strokeWidth="2.5"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
         initial={{ pathLength: shouldAnimate ? 0 : 1, opacity: 1 }}
@@ -63,16 +66,12 @@ export function BadgerMark({
       <m.g
         initial={{ opacity: shouldAnimate ? 0 : 1 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.45, delay: shouldAnimate ? 0.95 : 0 }}
+        transition={{ duration: 0.45, delay: shouldAnimate ? 0.9 : 0 }}
       >
-        <path d={OUTER_PATH} fill="url(#bm-grad)" />
-        <path d="M25 22 L42 33 L32 54 L22 40 Z M95 22 L78 33 L88 54 L98 40 Z" fill="var(--background)" />
-        <path d={INNER_PATH} fill="url(#bm-grad)" />
-        <polygon points="39,57 46,64 43,68 36,61" fill="#1DF2E2" />
-        <polygon points="81,57 74,64 77,68 84,61" fill="#1DF2E2" />
-        <polygon points="50,104 70,104 66,112 54,112" fill="#1DF2E2" />
+        <path d={LEFT_BOLT_PATH} fill="url(#bm-grad)" />
+        <path d={RIGHT_BOLT_PATH} fill="url(#bm-grad)" />
+        <path d={JAW_PATH} fill="url(#bm-grad)" />
       </m.g>
-    </svg>
+    </m.svg>
   );
 }
-

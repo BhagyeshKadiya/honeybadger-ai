@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import * as m from "motion/react-m";
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { Menu } from "lucide-react";
+import { Menu, MessageCircle } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,11 +20,13 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CtaLink, WhatsAppLink } from "@/components/CtaLinks";
 import { ServiceIcon } from "@/components/ServiceIcon";
+import { BadgerMark } from "@/components/brand/BadgerMark";
 import { SERVICES } from "@/content/services";
-import { NAV_LINKS, SITE } from "@/lib/constants";
+import { NAV_LINKS, SITE, WA_LINK } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -32,47 +35,41 @@ export function Navbar() {
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const prev = scrollY.getPrevious() ?? 0;
-    setHidden(latest > prev && latest > 120);
+    setHidden(latest > prev && latest > 140);
     setScrolled(latest > 12);
   });
 
   return (
     <m.header
-      animate={{ y: hidden ? "-110%" : "0%" }}
-      transition={{ type: "spring", stiffness: 120, damping: 20 }}
-      className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5"
+      animate={{ y: hidden ? "-115%" : "0%" }}
+      transition={{ type: "spring", stiffness: 140, damping: 22 }}
+      className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-5 sm:pt-3"
     >
       <div
         className={cn(
-          "glass mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 transition-shadow duration-300 sm:px-5",
-          scrolled && "shadow-[0_10px_40px_-12px_rgba(0,0,0,0.85)]",
+          "glass mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-3.5 transition-shadow duration-300 sm:px-5",
+          scrolled && "shadow-[0_12px_40px_-10px_rgba(0,0,0,0.9)] border-border-strong",
         )}
       >
-        {/* Horizontal logo at 34px height (next/image, priority) + light-theme variant + SR/visible brand text */}
+        {/* Brand lockup: uploaded symbol + animated stroke-draw mark + geometric wordmark */}
         <Link
           href="/"
           aria-label={`${SITE.name} home`}
-          className="flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-90"
+          className="group flex shrink-0 items-center gap-2.5"
         >
-          <Image
-            src="/logo.png"
-            alt={`${SITE.name} logo`}
-            width={1024}
-            height={341}
-            priority
-            style={{ width: "auto", height: "34px" }}
-            className="hidden drop-shadow-[0_0_14px_rgba(29,242,226,0.28)] dark:block"
-          />
-          <Image
-            src="/brand/logo-light.svg"
-            alt={`${SITE.name} logo`}
-            width={220}
-            height={34}
-            priority
-            style={{ width: "auto", height: "34px" }}
-            className="block dark:hidden"
-          />
-          <span className="wordmark-text sr-only">HONEYBADGER.AI</span>
+          <span className="relative flex size-9 items-center justify-center rounded-xl border border-white/10 bg-surface-2/80 p-1 shadow-[0_0_18px_rgba(29,242,226,0.22)] transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
+            <Image
+              src="/brand/symbol.png"
+              alt={`${SITE.name} symbol`}
+              width={64}
+              height={64}
+              priority
+              className="size-7 object-contain drop-shadow-[0_0_10px_rgba(29,242,226,0.5)]"
+            />
+          </span>
+          <span className="wordmark-text text-[13px] font-semibold tracking-[0.18em] sm:text-sm sm:tracking-[0.22em]">
+            HONEYB<span className="text-brand">&#923;</span>DGER.<span className="text-brand">&#923;</span>I
+          </span>
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex" onMouseLeave={() => setHovered(null)}>
@@ -110,51 +107,82 @@ export function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onMouseEnter={() => setHovered(l.href)}
-              onFocus={() => setHovered(l.href)}
-              className="link-draw text-muted-foreground hover:text-foreground relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors"
-            >
-              {hovered === l.href && (
-                <m.span
-                  layoutId="nav-pill"
-                  className="bg-surface-2 absolute inset-0 -z-10 rounded-lg"
-                  transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                />
-              )}
-              {l.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((l) => {
+            const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                onMouseEnter={() => setHovered(l.href)}
+                onFocus={() => setHovered(l.href)}
+                className={cn(
+                  "link-draw relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+                  active ? "text-brand" : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {hovered === l.href && (
+                  <m.span
+                    layoutId="nav-pill"
+                    className="bg-surface-2 absolute inset-0 -z-10 rounded-lg"
+                    transition={{ type: "spring", stiffness: 140, damping: 20 }}
+                  />
+                )}
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-1.5">
           <ThemeToggle />
+          {/* Quick WhatsApp icon button on mobile header */}
+          <a
+            href={WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="btn-secondary-brand grid size-9 place-items-center rounded-lg md:hidden"
+          >
+            <MessageCircle className="text-brand size-4" aria-hidden="true" />
+          </a>
           <WhatsAppLink className="hidden md:inline-flex">Talk to us</WhatsAppLink>
           <CtaLink href="/contact" className="hidden xl:inline-flex">
             Start your project
           </CtaLink>
 
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger render={<Button variant="ghost" size="icon-lg" aria-label="Open menu" className="lg:hidden" />}>
+            <SheetTrigger render={<Button variant="ghost" size="icon" aria-label="Open menu" className="lg:hidden" />}>
               <Menu className="size-5" aria-hidden="true" />
             </SheetTrigger>
             <SheetContent side="right" className="w-[88%] max-w-sm overflow-y-auto p-5">
-              <SheetTitle className="wordmark-text text-sm font-semibold">HONEYBADGER.AI</SheetTitle>
+              <div className="flex items-center gap-2.5">
+                <BadgerMark size={28} animate />
+                <SheetTitle className="wordmark-text text-xs font-semibold">
+                  HONEYB<span className="text-brand">&#923;</span>DGER.<span className="text-brand">&#923;</span>I
+                </SheetTitle>
+              </div>
               <SheetDescription className="sr-only">Site navigation</SheetDescription>
-              <nav aria-label="Mobile" className="flex flex-col gap-1">
+              <nav aria-label="Mobile" className="mt-2 flex flex-col gap-1">
                 <p className="text-eyebrow mt-2 px-2">Services</p>
                 {SERVICES.map((s) => (
-                  <SheetClose key={s.slug} render={<Link href={`/services/${s.slug}`} />} className="hover:bg-surface-2 flex items-center gap-3 rounded-lg px-2 py-2.5 text-sm">
-                    <ServiceIcon name={s.icon} className="text-brand size-4" />
-                    {s.title}
+                  <SheetClose
+                    key={s.slug}
+                    render={<Link href={`/services/${s.slug}`} />}
+                    className="hover:bg-surface-2 active:bg-surface-2 flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-sm transition-transform active:scale-[0.98]"
+                  >
+                    <span className="border-border bg-surface-2 text-brand grid size-8 shrink-0 place-items-center rounded-lg border">
+                      <ServiceIcon name={s.icon} className="size-4" />
+                    </span>
+                    <span className="font-medium">{s.title}</span>
                   </SheetClose>
                 ))}
                 <p className="text-eyebrow mt-4 px-2">Company</p>
                 {[{ label: "RAG & AI", href: "/rag-ai" }, ...NAV_LINKS, { label: "Contact", href: "/contact" }].map((l) => (
-                  <SheetClose key={l.href} render={<Link href={l.href} />} className="hover:bg-surface-2 rounded-lg px-2 py-2.5 text-sm">
+                  <SheetClose
+                    key={l.href}
+                    render={<Link href={l.href} />}
+                    className="hover:bg-surface-2 rounded-xl px-2.5 py-2.5 text-sm font-medium"
+                  >
                     {l.label}
                   </SheetClose>
                 ))}

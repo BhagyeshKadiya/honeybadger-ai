@@ -9,32 +9,20 @@ export function Footer() {
     <footer className="relative border-t border-border bg-background pb-24 lg:pb-0">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-12">
         <div className="md:col-span-4">
-          {/* Mobile: mark only (/brand/mark.svg). Tablet/Desktop: horizontal logo at 34px height. */}
+          {/* Uploaded symbol + wordmark lockup */}
           <Link href="/" aria-label={`${SITE.name} home`} className="inline-flex items-center gap-3">
-            <Image
-              src="/brand/mark.svg"
-              alt={`${SITE.name} mark`}
-              width={36}
-              height={36}
-              className="block sm:hidden"
-            />
-            <span className="wordmark-text text-sm font-semibold sm:hidden">HONEYBADGER.AI</span>
-            <Image
-              src="/logo.png"
-              alt={`${SITE.name} logo`}
-              width={1024}
-              height={341}
-              style={{ width: "auto", height: "34px" }}
-              className="hidden drop-shadow-[0_0_12px_rgba(29,242,226,0.22)] sm:dark:block"
-            />
-            <Image
-              src="/brand/logo-light.svg"
-              alt={`${SITE.name} logo`}
-              width={220}
-              height={34}
-              style={{ width: "auto", height: "34px" }}
-              className="hidden sm:block sm:dark:hidden"
-            />
+            <span className="flex size-10 items-center justify-center rounded-xl border border-white/10 bg-surface-2 p-1.5 shadow-[0_0_20px_rgba(29,242,226,0.22)]">
+              <Image
+                src="/brand/symbol.png"
+                alt={`${SITE.name} symbol`}
+                width={64}
+                height={64}
+                className="size-7 object-contain drop-shadow-[0_0_8px_rgba(29,242,226,0.45)]"
+              />
+            </span>
+            <span className="wordmark-text text-sm font-semibold tracking-[0.22em]">
+              HONEYB<span className="text-brand">&#923;</span>DGER.<span className="text-brand">&#923;</span>I
+            </span>
           </Link>
           <p className="text-muted-foreground mt-4 max-w-xs text-sm">
             We build AI-powered software. Then we make sure it gets found. Relentless by design, like the badger.

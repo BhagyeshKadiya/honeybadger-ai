@@ -1,35 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 120" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 160" fill="none">
   <defs>
-    <linearGradient id="hb-dark-grad" x1="16" y1="10" x2="104" y2="112" gradientUnits="userSpaceOnUse">
+    <linearGradient id="hb-dark-grad" x1="12" y1="15" x2="146" y2="142" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#1DF2E2" />
       <stop offset="100%" stop-color="#0FB8AA" />
     </linearGradient>
   </defs>
   <g>
     <path
-      d="M20 12 L48 30 L38 56 L53 102 L44 106 L12 56 L24 40 L16 16 Z M100 12 L72 30 L82 56 L67 102 L76 106 L108 56 L96 40 L104 16 Z"
+      d="M26 15 L34 56 L39 50 L34 26 L56 42 L40 72 L52 85 L70 122 L73 122 L64 80 L58 72 L72 45 Z"
       fill="url(#hb-dark-grad)"
     />
     <path
-      d="M25 22 L42 33 L32 54 L22 40 Z M95 22 L78 33 L88 54 L98 40 Z"
-      fill="#000000"
-    />
-    <path
-      d="M46 34 L55 52 L46 70 L56 98 L60 98 L64 98 L74 70 L65 52 L74 34 L63 44 L60 36 L57 44 Z"
+      d="M132 15 L124 56 L119 50 L124 26 L102 42 L118 72 L106 85 L88 122 L85 122 L94 80 L100 72 L86 45 Z"
       fill="url(#hb-dark-grad)"
     />
-    <polygon points="39,57 46,64 43,68 36,61" fill="#1DF2E2" />
-    <polygon points="81,57 74,64 77,68 84,61" fill="#1DF2E2" />
-    <polygon points="50,104 70,104 66,112 54,112" fill="#1DF2E2" />
+    <path
+      d="M28 60 L12 80 L39 98 L63 136 L68 142 L90 142 L95 136 L119 98 L146 80 L130 60 L124 66 L132 77 L112 91 L92 130 L86 130 L84 127 L74 127 L72 130 L66 130 L46 91 L26 77 L34 66 Z"
+      fill="url(#hb-dark-grad)"
+    />
   </g>
   <text
-    x="140"
-    y="76"
+    x="172"
+    y="98"
     fill="#FFFFFF"
     font-family="Montserrat, system-ui, -apple-system, sans-serif"
-    font-size="44"
+    font-size="52"
     font-weight="600"
-    letter-spacing="8"
+    letter-spacing="9"
   >HONEYB&#923;DGER.&#923;I</text>
 </svg>
-

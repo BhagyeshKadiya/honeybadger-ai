@@ -487,6 +487,14 @@
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 ::selection {
   background: rgba(29, 242, 226, 0.28);
   color: #FFFFFF;
