@@ -78,7 +78,7 @@ export default function HeroVisual() {
       {/* =====================================================================
           MOBILE & TABLET: SLEEK COMPACT APP LIVE-PREVIEW CARD (<lg)
          ===================================================================== */}
-      <div className="mx-auto max-w-md lg:hidden">
+      <div className="mx-auto w-full min-w-0 max-w-sm px-1 lg:hidden">
         <div className="glass overflow-hidden rounded-2xl border border-border-strong p-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.85),0_0_24px_rgba(29,242,226,0.12)]">
           {/* Segmented iOS/Android Pill Bar */}
           <div className="bg-surface-2/90 grid grid-cols-3 gap-1 rounded-xl border border-border p-1">

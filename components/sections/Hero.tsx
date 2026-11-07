@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import * as m from "motion/react-m";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { CtaLink, WhatsAppLink } from "@/components/CtaLinks";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { Magnetic } from "@/components/motion/Magnetic";
@@ -15,7 +15,7 @@ import { SITE } from "@/lib/constants";
 
 const HeroVisual = dynamic(() => import("./HeroVisual"), {
   ssr: false,
-  loading: () => <div className="mx-auto h-[180px] w-full max-w-md lg:h-[500px] lg:max-w-xl" aria-hidden="true" />,
+  loading: () => <div className="mx-auto h-[180px] w-full max-w-sm lg:h-[500px] lg:max-w-xl" aria-hidden="true" />,
 });
 
 const TRUST = ["Websites", "Web Apps", "Mobile Apps", "AI Automation", "RAG", "AEO/GEO"];
@@ -33,33 +33,34 @@ export function Hero() {
       </div>
 
       <div className="mx-auto grid max-w-6xl items-center gap-7 px-4 sm:gap-10 sm:px-5 lg:grid-cols-[1.15fr_1fr]">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          {/* MOBILE 3D HOLOGRAPHIC BADGER CENTERPIECE (Visible immediately above the fold on mobile/tablet) */}
+        <div className="flex w-full min-w-0 flex-col items-center text-center lg:items-start lg:text-left">
+          {/* MOBILE 3D HOLOGRAPHIC BADGER CENTERPIECE (<lg only) */}
           <m.div
             initial={{ opacity: 0, scale: 0.88 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", stiffness: 150, damping: 20 }}
-            className="relative mb-2 flex flex-col items-center lg:hidden"
+            className="relative mb-3 flex flex-col items-center lg:hidden"
           >
-            <div className="relative size-[168px] sm:size-[200px]">
+            <div className="relative size-[148px]">
               <div
                 aria-hidden="true"
-                className="bg-brand-gradient pointer-events-none absolute inset-4 rounded-full opacity-25 blur-2xl"
+                className="bg-brand-gradient pointer-events-none absolute inset-3 rounded-full opacity-25 blur-2xl"
               />
               <HoloBadger3D />
             </div>
-            <span className="border-primary/30 text-brand -mt-2 inline-flex items-center gap-1.5 rounded-full border bg-black/80 px-3 py-1 font-mono text-[10px] font-medium tracking-wider uppercase shadow-[0_0_20px_rgba(29,242,226,0.22)] backdrop-blur-md">
-              <Sparkles className="size-3" /> 3D Neural Core · Touch to rotate
+            {/* Single unified, sleek pill badge right below the 3D core (no duplicate stacked pills) */}
+            <span className="glass border-border-strong text-brand -mt-1.5 inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[10px] font-semibold tracking-wider uppercase shadow-[0_0_16px_rgba(29,242,226,0.22)] backdrop-blur-md">
+              <span className="animate-turquoise-pulse bg-primary size-1.5 rounded-full" />
+              3D Neural Core · Touch to rotate
             </span>
           </m.div>
 
-          {/* Desktop & Mobile Status Eyebrow Pill */}
+          {/* DESKTOP STATUS EYEBROW PILL (>=lg only) */}
           <m.div
             initial={{ opacity: 0, y: 10, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ type: "spring", stiffness: 160, damping: 20 }}
-            className="glass mt-2 mb-4 inline-flex items-center gap-2 px-3.5 py-1.5 sm:mb-6 lg:mt-0"
-            style={{ borderRadius: "9999px" }}
+            className="glass mb-6 hidden items-center gap-2.5 px-3.5 py-1.5 lg:inline-flex rounded-full"
           >
             <Image
               src="/brand/symbol.png"
@@ -67,55 +68,56 @@ export function Hero() {
               width={20}
               height={20}
               priority
-              className=" hidden size-4.5 object-contain drop-shadow-[0_0_8px_rgba(29,242,226,0.6)] lg:block"
+              className="size-4.5 object-contain drop-shadow-[0_0_8px_rgba(29,242,226,0.6)]"
             />
-            <span className="animate-turquoise-pulse bg-primary size-1.5 rounded-full lg:hidden" />
-            <span className="text-eyebrow whitespace-nowrap text-[10.5px] tracking-[0.16em] sm:text-xs sm:tracking-[0.2em]">
-              AI Development Studio · India
+            <span className="text-eyebrow text-xs tracking-[0.2em]">
+              AI Development Studio · Naroli, DNH
             </span>
           </m.div>
 
+          {/* HEADLINE: Responsive, fluid font sizing with zero cut-off words on mobile */}
           <TextReveal
             as="h1"
             text={SITE.tagline}
             highlight={[2, 10]}
-            className="font-display text-[1.95rem] leading-[1.08] font-semibold tracking-[-0.025em] sm:text-display"
+            className="font-display w-full min-w-0 max-w-full px-1 text-[1.75rem] leading-[1.12] font-semibold tracking-[-0.02em] sm:text-[2.25rem] lg:text-display"
           />
           <span id="hero-heading" className="sr-only">
             {SITE.tagline}
           </span>
 
+          {/* SUBHEADING: Constrained to screen boundaries on mobile, fluid on desktop */}
           <m.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
-            className="text-muted-foreground mt-3.5 max-w-md text-sm leading-relaxed sm:mt-6 sm:max-w-xl sm:text-lead"
+            className="w-full min-w-0 max-w-md mx-auto text-muted-foreground mt-3 text-xs sm:text-sm leading-relaxed px-1 text-center lg:text-left lg:mx-0 lg:max-w-xl lg:text-lead"
           >
             Websites, web apps and mobile apps with AI at the core, plus the AEO, GEO, SEO and install campaigns that put
             them in front of customers.
           </m.p>
 
-          {/* Primary & Secondary Action Buttons (Full-width clean app buttons on mobile, inline on sm+) */}
+          {/* CTA ACTION BUTTONS: Centered thumb-friendly touch targets on mobile, inline on desktop */}
           <m.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-5 flex w-full max-w-md flex-col gap-2.5 sm:mt-8 sm:max-w-none sm:flex-row sm:justify-center sm:gap-3 lg:justify-start"
+            className="mt-5 flex w-full min-w-0 max-w-xs flex-col gap-2.5 sm:mt-8 sm:max-w-none sm:flex-row sm:justify-center sm:gap-3 lg:justify-start"
           >
             <Magnetic className="w-full sm:w-auto">
-              <CtaLink href="/contact" size="lg" className="h-12 w-full rounded-2xl text-sm font-semibold sm:w-auto">
+              <CtaLink href="/contact" size="lg" className="h-11.5 w-full rounded-2xl text-xs sm:text-sm font-semibold shadow-[0_0_24px_rgba(29,242,226,0.35)] sm:w-auto sm:h-12">
                 Start your project
               </CtaLink>
             </Magnetic>
-            <WhatsAppLink size="lg" className="h-11 w-full rounded-2xl text-sm sm:h-12 sm:w-auto" />
+            <WhatsAppLink size="lg" className="h-11 w-full rounded-2xl text-xs sm:text-sm sm:h-12 sm:w-auto" />
           </m.div>
 
-          {/* Mobile App Quick-Jump Service Chips */}
+          {/* MOBILE QUICK-JUMP SERVICE CHIPS */}
           <m.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.75 }}
-            className="mt-5 w-full max-w-md lg:hidden"
+            className="mt-5 w-full min-w-0 max-w-full lg:hidden"
           >
             <div className="no-scrollbar -mx-4 flex snap-x gap-2 overflow-x-auto px-4 py-1">
               {SERVICES.map((s) => (
@@ -136,7 +138,7 @@ export function Hero() {
         <HeroVisual />
       </div>
 
-      {/* Desktop Trust Strip (Hidden on mobile since Quick-Jump service chips already display above) */}
+      {/* Desktop Trust Strip (Hidden on mobile since Quick-Jump service chips display above) */}
       <div className="mx-auto mt-10 hidden max-w-6xl px-4 sm:mt-14 sm:block sm:px-5">
         <ul className="border-border text-muted-foreground flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-y py-3.5 font-mono text-[11px] font-medium tracking-wider uppercase sm:py-4 sm:text-sm">
           {TRUST.map((t, i) => (

@@ -1,6 +1,5 @@
 "use client";
 
-import { Fragment } from "react";
 import * as m from "motion/react-m";
 import { useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -15,7 +14,11 @@ interface TextRevealProps {
   as?: "h1" | "h2" | "p";
 }
 
-/** Word-by-word blur-in with natural browser word-wrapping on mobile and desktop. */
+/**
+ * Word-by-word blur-in with safe wrapping on narrow mobile screens.
+ * Uses inline-block word spans with non-breaking word units and breakable spacing,
+ * ensuring no words are clipped or pushed beyond the viewport width.
+ */
 export function TextReveal({ text, className, highlight = [], delay = 0, as = "h1" }: TextRevealProps) {
   const reduce = useReducedMotion();
   const words = text.split(" ");
@@ -23,14 +26,14 @@ export function TextReveal({ text, className, highlight = [], delay = 0, as = "h
 
   return (
     <Comp
-      className={cn("text-balance", className)}
+      className={cn("w-full min-w-0 max-w-full text-balance break-normal", className)}
       aria-label={text}
       initial="hidden"
       animate="show"
-      variants={{ show: { transition: { staggerChildren: reduce ? 0 : 0.06, delayChildren: delay } } }}
+      variants={{ show: { transition: { staggerChildren: reduce ? 0 : 0.05, delayChildren: delay } } }}
     >
       {words.map((word, i) => (
-        <Fragment key={`${word}-${i}`}>
+        <span key={`${word}-${i}`} className="inline-block whitespace-nowrap">
           <m.span
             aria-hidden="true"
             className={cn("inline-block will-change-transform", highlight.includes(i) && "text-honey-gradient")}
@@ -41,8 +44,8 @@ export function TextReveal({ text, className, highlight = [], delay = 0, as = "h
           >
             {word}
           </m.span>
-          {i < words.length - 1 ? " " : null}
-        </Fragment>
+          {i < words.length - 1 ? <span className="inline-block">&nbsp;</span> : null}
+        </span>
       ))}
     </Comp>
   );
