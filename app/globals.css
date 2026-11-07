@@ -216,16 +216,16 @@
    ========================================================================== */
 .text-display {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.04;
+  font-size: clamp(2rem, 5.8vw, 5rem);
+  line-height: 1.06;
   letter-spacing: -0.02em;
   font-weight: 600;
 }
 
 .text-h2 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  line-height: 1.08;
+  font-size: clamp(1.65rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 600;
 }

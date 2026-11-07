@@ -75,14 +75,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-8 sm:flex sm:flex-row sm:gap-3"
+            className="mt-5 grid grid-cols-2 gap-2.5 sm:mt-8 sm:flex sm:flex-row sm:gap-3"
           >
             <Magnetic className="w-full sm:w-auto">
-              <CtaLink href="/contact" size="lg" className="w-full sm:w-auto">
-                Start your project
+              <CtaLink href="/contact" size="lg" className="w-full px-3 text-xs sm:w-auto sm:px-5 sm:text-sm">
+                Start project
               </CtaLink>
             </Magnetic>
-            <WhatsAppLink size="lg" className="w-full sm:w-auto" />
+            <WhatsAppLink size="lg" className="w-full px-3 text-xs sm:w-auto sm:px-5 sm:text-sm" />
           </m.div>
 
           {/* Mobile App Quick-Launch Service Pills (horizontal swipe on mobile) */}

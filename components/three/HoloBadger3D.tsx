@@ -280,3 +280,4 @@ export function HoloBadger3D({ className }: { className?: string }) {
     />
   );
 }
+

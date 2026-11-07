@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import * as m from "motion/react-m";
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { Menu, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Menu, MessageCircle, Sparkles } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CtaLink, WhatsAppLink } from "@/components/CtaLinks";
 import { ServiceIcon } from "@/components/ServiceIcon";
-import { BadgerMark } from "@/components/brand/BadgerMark";
 import { SERVICES } from "@/content/services";
 import { NAV_LINKS, SITE, WA_LINK } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -43,31 +42,32 @@ export function Navbar() {
     <m.header
       animate={{ y: hidden ? "-115%" : "0%" }}
       transition={{ type: "spring", stiffness: 140, damping: 22 }}
-      className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2.5 sm:px-5 sm:pt-3"
+      className="fixed inset-x-0 top-0 z-50 px-2.5 pt-2 sm:px-5 sm:pt-3"
     >
       <div
         className={cn(
-          "glass mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-3.5 transition-shadow duration-300 sm:px-5",
+          "glass mx-auto flex h-13.5 max-w-6xl items-center justify-between gap-2 px-3 transition-shadow duration-300 sm:h-14 sm:gap-3 sm:px-5",
           scrolled && "shadow-[0_12px_40px_-10px_rgba(0,0,0,0.9)] border-border-strong",
         )}
       >
-        {/* Brand lockup: uploaded symbol + animated stroke-draw mark + geometric wordmark */}
+        {/* Brand lockup: uploaded symbol + geometric wordmark */}
         <Link
           href="/"
           aria-label={`${SITE.name} home`}
-          className="group flex shrink-0 items-center gap-2.5"
+          className="group flex min-w-0 shrink-0 items-center gap-2 sm:gap-2.5"
         >
-          <span className="relative flex size-9 items-center justify-center rounded-xl border border-white/10 bg-surface-2/80 p-1 shadow-[0_0_18px_rgba(29,242,226,0.22)] transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
+          <span className="relative flex size-8.5 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-surface-2/90 p-1 shadow-[0_0_18px_rgba(29,242,226,0.25)] transition-transform duration-200 group-hover:scale-105 group-active:scale-95 sm:size-9">
             <Image
               src="/brand/symbol.png"
               alt={`${SITE.name} symbol`}
               width={64}
               height={64}
               priority
-              className="size-7 object-contain drop-shadow-[0_0_10px_rgba(29,242,226,0.5)]"
+              className="size-6.5 object-contain drop-shadow-[0_0_10px_rgba(29,242,226,0.55)] sm:size-7"
             />
+            <span className="animate-turquoise-pulse bg-primary ring-background absolute -top-0.5 -right-0.5 size-2 rounded-full ring-2" />
           </span>
-          <span className="wordmark-text text-[13px] font-semibold tracking-[0.18em] sm:text-sm sm:tracking-[0.22em]">
+          <span className="wordmark-text whitespace-nowrap text-[11.5px] font-semibold tracking-[0.14em] sm:text-sm sm:tracking-[0.22em]">
             HONEYB<span className="text-brand">&#923;</span>DGER.<span className="text-brand">&#923;</span>I
           </span>
         </Link>
@@ -133,7 +133,7 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
           <ThemeToggle />
           {/* Quick WhatsApp icon button on mobile header */}
           <a
@@ -141,7 +141,7 @@ export function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
-            className="btn-secondary-brand grid size-9 place-items-center rounded-lg md:hidden"
+            className="btn-secondary-brand grid size-8.5 place-items-center rounded-lg transition-transform active:scale-90 md:hidden"
           >
             <MessageCircle className="text-brand size-4" aria-hidden="true" />
           </a>
@@ -151,47 +151,82 @@ export function Navbar() {
           </CtaLink>
 
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger render={<Button variant="ghost" size="icon" aria-label="Open menu" className="lg:hidden" />}>
+            <SheetTrigger render={<Button variant="ghost" size="icon" aria-label="Open menu" className="size-8.5 lg:hidden" />}>
               <Menu className="size-5" aria-hidden="true" />
             </SheetTrigger>
-            <SheetContent side="right" className="w-[88%] max-w-sm overflow-y-auto p-5">
-              <div className="flex items-center gap-2.5">
-                <BadgerMark size={28} animate />
+            <SheetContent side="right" className="w-[92%] max-w-sm overflow-y-auto border-l border-border-strong bg-background/95 p-4 backdrop-blur-2xl">
+              <div className="flex items-center gap-2.5 border-b border-border pb-3.5">
+                <span className="flex size-8 items-center justify-center rounded-lg border border-border-strong bg-surface-2 p-1">
+                  <Image src="/brand/symbol.png" alt="" width={40} height={40} className="size-6 object-contain" />
+                </span>
                 <SheetTitle className="wordmark-text text-xs font-semibold">
                   HONEYB<span className="text-brand">&#923;</span>DGER.<span className="text-brand">&#923;</span>I
                 </SheetTitle>
               </div>
-              <SheetDescription className="sr-only">Site navigation</SheetDescription>
-              <nav aria-label="Mobile" className="mt-2 flex flex-col gap-1">
-                <p className="text-eyebrow mt-2 px-2">Services</p>
-                {SERVICES.map((s) => (
-                  <SheetClose
-                    key={s.slug}
-                    render={<Link href={`/services/${s.slug}`} />}
-                    className="hover:bg-surface-2 active:bg-surface-2 flex items-center gap-3 rounded-xl px-2.5 py-2.5 text-sm transition-transform active:scale-[0.98]"
-                  >
-                    <span className="border-border bg-surface-2 text-brand grid size-8 shrink-0 place-items-center rounded-lg border">
-                      <ServiceIcon name={s.icon} className="size-4" />
+              <SheetDescription className="sr-only">Mobile app command menu</SheetDescription>
+
+              <nav aria-label="Mobile" className="mt-3 flex flex-col gap-3">
+                {/* Flagship 3D RAG Spotlight Banner */}
+                <SheetClose
+                  render={<Link href="/rag-ai" />}
+                  className="glass border-border-strong flex items-center justify-between gap-3 rounded-2xl border p-3.5 transition-transform active:scale-[0.98]"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="bg-brand-gradient text-ink grid size-9 shrink-0 place-items-center rounded-xl shadow-[0_0_16px_rgba(29,242,226,0.4)]">
+                      <Sparkles className="size-4" />
                     </span>
-                    <span className="font-medium">{s.title}</span>
-                  </SheetClose>
-                ))}
-                <p className="text-eyebrow mt-4 px-2">Company</p>
-                {[{ label: "RAG & AI", href: "/rag-ai" }, ...NAV_LINKS, { label: "Contact", href: "/contact" }].map((l) => (
-                  <SheetClose
-                    key={l.href}
-                    render={<Link href={l.href} />}
-                    className="hover:bg-surface-2 rounded-xl px-2.5 py-2.5 text-sm font-medium"
-                  >
-                    {l.label}
-                  </SheetClose>
-                ))}
+                    <div>
+                      <p className="font-display text-xs font-semibold text-foreground">Flagship: Private RAG AI</p>
+                      <p className="text-muted-foreground font-mono text-[11px]">Answers from your docs + citations</p>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="text-brand size-4 shrink-0" />
+                </SheetClose>
+
+                {/* 2-Column App Bento Grid for all 7 Services */}
+                <div>
+                  <p className="text-eyebrow mb-2 px-1 text-[11px]">Capabilities (7)</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {SERVICES.map((s) => (
+                      <SheetClose
+                        key={s.slug}
+                        render={<Link href={`/services/${s.slug}`} />}
+                        className="glass flex flex-col justify-between gap-2 rounded-xl p-2.5 transition-transform active:scale-95"
+                      >
+                        <span className="border-border-strong bg-surface-2 text-brand grid size-7 place-items-center rounded-lg border">
+                          <ServiceIcon name={s.icon} className="size-3.5" />
+                        </span>
+                        <span className="font-display line-clamp-2 text-xs font-medium leading-tight">{s.shortTitle}</span>
+                      </SheetClose>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Quick Company Links Grid */}
+                <div>
+                  <p className="text-eyebrow mb-2 px-1 text-[11px]">Explore</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[...NAV_LINKS, { label: "Contact", href: "/contact" }].map((l) => (
+                      <SheetClose
+                        key={l.href}
+                        render={<Link href={l.href} />}
+                        className="bg-surface-2 hover:border-border-strong flex items-center justify-between rounded-xl border border-border px-3 py-2.5 text-xs font-medium transition-transform active:scale-95"
+                      >
+                        <span>{l.label}</span>
+                        <ArrowUpRight className="text-muted-foreground size-3.5" />
+                      </SheetClose>
+                    ))}
+                  </div>
+                </div>
               </nav>
+
               <div className="mt-auto flex flex-col gap-2 pt-4">
-                <CtaLink href="/contact" size="lg">
+                <CtaLink href="/contact" size="lg" className="w-full">
                   Start your project
                 </CtaLink>
-                <WhatsAppLink size="lg">Chat on WhatsApp</WhatsAppLink>
+                <WhatsAppLink size="lg" className="w-full">
+                  Chat on WhatsApp
+                </WhatsAppLink>
               </div>
             </SheetContent>
           </Sheet>

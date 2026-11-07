@@ -10,7 +10,7 @@ function Sparkline({ series, id }: { series: readonly number[]; id: string }) {
   const pts = series.map((v, i) => `${(i / (series.length - 1)) * 200},${68 - (v / max) * 60}`);
   const line = `M${pts.join(" L")}`;
   return (
-    <svg viewBox="0 0 200 70" className="depth-z-10 mt-6 h-20 w-full" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 200 70" className="depth-z-10 mt-5 h-18 w-full sm:mt-6 sm:h-20" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id={`${id}-s`} x1="0" x2="1">
           <stop offset="0" stopColor="#1DF2E2" />
@@ -29,7 +29,7 @@ function Sparkline({ series, id }: { series: readonly number[]; id: string }) {
 
 export function Growth() {
   return (
-    <section id="growth" aria-labelledby="growth-h" className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-28">
+    <section id="growth" aria-labelledby="growth-h" className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-28">
       <SectionHeading
         id="growth-h"
         eyebrow="Ranking and growth"
@@ -37,17 +37,21 @@ export function Growth() {
         answer="A product only grows when people can discover it. These example curves show the kind of trajectory a combined SEO, AEO, GEO and install strategy aims for."
       />
 
-      <div className="mt-10 grid gap-4 sm:mt-12 md:grid-cols-3">
+      <p className="text-muted-foreground mt-6 mb-2 font-mono text-[11px] uppercase tracking-wider md:hidden">
+        Swipe telemetry cards →
+      </p>
+
+      <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-3.5 overflow-x-auto px-4 pb-2 sm:mt-12 md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:px-0 md:pb-0">
         {GROWTH_EXAMPLES.map((g, i) => (
-          <Reveal key={g.label} delay={i * 0.08}>
-            <Tilt3DCard className="h-full p-6">
+          <Reveal key={g.label} delay={i * 0.08} className="w-[82vw] max-w-[310px] shrink-0 snap-center md:w-auto md:max-w-none">
+            <Tilt3DCard className="h-full p-5 sm:p-6">
               <div className="depth-z-10 text-muted-foreground flex items-center justify-between text-sm">
                 <span className="font-display font-medium text-foreground">{g.label}</span>
                 <span className="text-brand flex items-center gap-1 font-mono text-xs font-medium">
                   <TrendingUp className="size-3.5" aria-hidden="true" /> {g.delta}
                 </span>
               </div>
-              <p className="depth-z-20 text-brand mt-3 font-mono text-4xl font-medium tracking-tight drop-shadow-[0_0_16px_rgba(29,242,226,0.25)]">
+              <p className="depth-z-20 text-brand mt-3 font-mono text-3xl font-medium tracking-tight drop-shadow-[0_0_16px_rgba(29,242,226,0.25)] sm:text-4xl">
                 <Counter to={g.value} suffix={g.suffix} />
               </p>
               <Sparkline series={g.series} id={`g${i}`} />
@@ -56,9 +60,8 @@ export function Growth() {
         ))}
       </div>
 
-      <p className="text-muted-foreground mt-6 max-w-2xl text-xs">
+      <p className="text-muted-foreground mt-4 max-w-2xl text-xs sm:mt-6">
         Illustrative examples only. These figures are not client results and do not represent guaranteed outcomes.
-        {/* TODO: replace with real, permissioned metrics once available */}
       </p>
     </section>
   );
