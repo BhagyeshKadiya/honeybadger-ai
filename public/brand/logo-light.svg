@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 120" fill="none">
+  <defs>
+    <linearGradient id="hb-light-grad" x1="16" y1="10" x2="104" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0A9E92" />
+      <stop offset="100%" stop-color="#05100F" />
+    </linearGradient>
+  </defs>
+  <!-- Badger Mark (Dark/Turquoise for Light Theme) -->
+  <g>
+    <path
+      d="M20 12 L48 30 L38 56 L53 102 L44 106 L12 56 L24 40 L16 16 Z M100 12 L72 30 L82 56 L67 102 L76 106 L108 56 L96 40 L104 16 Z"
+      fill="url(#hb-light-grad)"
+    />
+    <path
+      d="M25 22 L42 33 L32 54 L22 40 Z M95 22 L78 33 L88 54 L98 40 Z"
+      fill="#F7FBFB"
+    />
+    <path
+      d="M46 34 L55 52 L46 70 L56 98 L60 98 L64 98 L74 70 L65 52 L74 34 L63 44 L60 36 L57 44 Z"
+      fill="url(#hb-light-grad)"
+    />
+    <polygon points="39,57 46,64 43,68 36,61" fill="#0A9E92" />
+    <polygon points="81,57 74,64 77,68 84,61" fill="#0A9E92" />
+    <polygon points="50,104 70,104 66,112 54,112" fill="#05100F" />
+  </g>
+  <!-- Geometric Wordmark with Stylized Crossbar-less A (Λ) -->
+  <text
+    x="140"
+    y="76"
+    fill="#05100F"
+    font-family="Montserrat, system-ui, -apple-system, sans-serif"
+    font-size="44"
+    font-weight="600"
+    letter-spacing="8"
+  >HONEYB&#923;DGER.&#923;I</text>
+</svg>
+

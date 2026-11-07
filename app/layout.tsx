@@ -1,64 +1,69 @@
-import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { fontVariables } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import SpiderCursor from "@/components/SpiderCursor";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
-import ScrollToTop from "@/components/ScrollToTop";
-import { LocalBusinessSchema } from "@/components/SchemaOrg";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["300", "400", "500", "600", "700"],
-});
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import { Toaster } from "@/components/ui/sonner";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE } from "@/lib/constants";
+import { localBusinessSchema, organizationSchema, websiteSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://honeybadgerai.in'),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: 'Honeybadger.AI | Performance Marketing Agency in Naroli, DNH & Vapi',
-    template: '%s | Honeybadger.AI',
+    default: "Honeybadger.AI | AI Development Company in India",
+    template: "%s | Honeybadger.AI",
   },
-  description: 'AI-powered performance marketing agency in Naroli, Dadra and Nagar Haveli. Meta & Google ads, WhatsApp automation via AiSensy, and AI content for real estate, hotels, and e-commerce brands across the Vapi–Silvassa–DNH corridor.',
-  alternates: {
-    canonical: 'https://honeybadgerai.in',
+  description: SITE.description,
+  applicationName: SITE.name,
+  alternates: { canonical: SITE.url, languages: { "en-IN": SITE.url } },
+  verification: { google: SITE.googleVerification },
+  icons: {
+    icon: [
+      { url: "/brand/mark.svg", type: "image/svg+xml" },
+      { url: "/icon", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/brand/mark.svg"],
   },
-  verification: {
-    google: 'lkaCbgUsSCIDi2Kj0jvVovzGwCYILDIFovAQRAnpQJo',
-  },
+  manifest: "/manifest.webmanifest",
   openGraph: {
-    url: 'https://honeybadgerai.in',
-    siteName: 'Honeybadger.AI',
-    locale: 'en_IN',
-    type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    url: SITE.url,
+    siteName: SITE.name,
+    locale: "en_IN",
+    type: "website",
   },
-  twitter: {
-    card: 'summary_large_image',
-    site: '@honeybadgerai',
-    creator: '@honeybadgerai',
-  },
+  twitter: { card: "summary_large_image", site: "@honeybadgerai", creator: "@honeybadgerai" },
+  formatDetection: { telephone: false },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#F7FBFB" },
+  ],
+  colorScheme: "dark light",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <body className={`${outfit.variable} font-sans min-h-full flex flex-col`}>
+    <html
+      lang="en-IN"
+      className={`${fontVariables} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="flex min-h-full flex-col font-sans">
+        <JsonLd data={[organizationSchema(), localBusinessSchema(), websiteSchema()]} />
         <ThemeProvider
-          attribute="class"
+          attribute={["class", "data-theme"]}
           defaultTheme="dark"
-          enableSystem
+          enableSystem={false}
           disableTransitionOnChange
         >
-          <LocalBusinessSchema />
-          <SpiderCursor />
-          {children}
-          <FloatingWhatsApp />
-          <ScrollToTop />
+          <MotionProvider>
+            {children}
+            <Toaster position="top-center" />
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>
